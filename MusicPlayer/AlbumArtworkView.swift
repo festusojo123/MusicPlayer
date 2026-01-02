@@ -8,12 +8,19 @@
 import SwiftUI
 
 struct AlbumArtworkView: View {
-    var body: some View {
-        Image("PurpleNoon") // TODO: replaceme, also add default image for songs without artwork
-            .frame(width: 88, height: 88)
-    }
-}
+    let artworkName: String
+    let fallback: String = "Fallback"
 
-#Preview {
-    AlbumArtworkView()
+    var body: some View {
+        if UIImage(named: artworkName) != nil {
+            Image(artworkName)
+                .resizable()
+                .aspectRatio(contentMode: .fill)
+        }
+        else {
+            Image(fallback)
+                .resizable()
+                .aspectRatio(contentMode: .fill)
+        }
+    }
 }

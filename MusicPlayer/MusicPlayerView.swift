@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct MusicPlayerView: View {
+    @StateObject var player = PlayerManager()
+
     var body: some View {
         GeometryReader { geometry in
 
@@ -19,21 +21,20 @@ struct MusicPlayerView: View {
             let baseWidth: CGFloat = 480
             let baseHeight: CGFloat = 297
             
-            // Define `scale` to maintain aspect ratio between spec and screen's dimensions
+            // Defining scale variable to maintain aspect ratio between spec and screen's dimensions
             let scaleX = screenWidth / baseWidth
             let scaleY = screenHeight / baseHeight
             let scale = min(scaleX, scaleY)
             
             // Scaled dimensions
             let widgetWidth = baseWidth * 0.9 * scale
-            let widgetHeight = baseHeight * scale
+            let widgetHeight = baseHeight * 0.95 * scale
             
             VStack(spacing: 0) {
-                // Album art + track info
                 HStack(alignment: .center, spacing: 32 * scale) {
-                    AlbumArtworkView()
+                    AlbumArtworkView(artworkName: player.currentTrack.albumArt)
                         .frame(width: 88 * scale, height: 88 * scale)
-                    TrackInfoView(track: MockData.track1, scale: scale)
+                    TrackInfoView(track: player.currentTrack, scale: scale)
                 }
                 .padding(.horizontal, 32 * scale)
                 .padding(.top, 32 * 1.4 * scale)
@@ -42,12 +43,22 @@ struct MusicPlayerView: View {
                 Spacer()
                     .frame(height: 32 * scale)
                 
-                // Timeline + controls
-                TimelineView()
+                TimelineView(
+                    currentTime: $player.currentTime,
+                    duration: player.duration,
+                    bufferedTime: player.bufferedTime,
+                    onSeek: { time in player.seek(to: time) }
+                )
                     .frame(width: 312 * 1.2 * scale)
                     .padding(.bottom, 16 * scale)
 
-                PlaybackControlsView(scale: scale)
+                PlaybackControlsView(scale: scale,
+                                     isLiked: player.currentTrack.isLiked,
+                                     isPlaying: player.isPlaying,
+                                     onPlayPause: player.togglePlayPause,
+                                     onNext: player.next,
+                                     onPrevious: player.previous,
+                                     onToggleFavorite: player.toggleFavorite)
                     .frame(width: 312 * 1.2 * scale)
                     .padding(.horizontal, 32 * scale)
                     .padding(.bottom, 32 * scale)
@@ -55,7 +66,6 @@ struct MusicPlayerView: View {
             .frame(width: widgetWidth, height: widgetHeight)
             .background(Color.backgroundColor)
             .cornerRadius(16 * scale)
-//            .shadow(color: Color.black.opacity(0.1), radius: 8 * scale, x: 0, y: 4 * scale) // TODO: not needed?
             .position(x: screenWidth / 2, y: screenHeight / 2)
         }
         .ignoresSafeArea(.all, edges: .all)

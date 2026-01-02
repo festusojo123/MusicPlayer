@@ -9,8 +9,12 @@ import SwiftUI
 
 struct PlaybackControlsView: View {
     let scale: CGFloat
-    @State private var isPlaying = false
-    @State private var isLiked = false
+    let isLiked: Bool
+    let isPlaying: Bool
+    let onPlayPause: () -> Void
+    let onNext: () -> Void
+    let onPrevious: () -> Void
+    let onToggleFavorite: () -> Void
     
     var body: some View {
         HStack(spacing: 20 * scale) {
@@ -22,7 +26,7 @@ struct PlaybackControlsView: View {
                     .frame(width: 32 * scale, height: 32 * scale)
             }
             
-            Button(action: {}) {
+            Button(action: onPrevious) {
                 Image(systemName: "backward.frame.fill")  // TODO: call out diff
                     .font(.system(size: 17 * scale))
                     .fontWeight(.ultraLight)
@@ -30,16 +34,16 @@ struct PlaybackControlsView: View {
                     .frame(width: 32 * scale, height: 32 * scale)
             }
 
-            Button(action: { isPlaying.toggle() }) {
+            Button(action: onPlayPause) {
                 Image(systemName: isPlaying ? "pause.fill" : "play.fill")
                     .font(.system(size: 28 * scale))
                     .foregroundColor(.white)
                     .frame(width: 64 * scale, height: 64 * scale)
-                    .background(Color.selectedColor) // TODO: .background(Color.selectedColor ?? Color.blue)
+                    .background(Color.selectedColor ?? Color.blue) // TODO: is the ?? not needed? what about other similar callsites?
                     .clipShape(Circle())
             }
             
-            Button(action: {}) {
+            Button(action: onNext) {
                 Image(systemName: "forward.frame.fill")
                     .font(.system(size: 17 * scale))
                     .fontWeight(.ultraLight)
@@ -49,7 +53,8 @@ struct PlaybackControlsView: View {
 
             Button(action: {
                 withAnimation(.spring()) {
-                    isLiked.toggle() // do we need both a button and in the data? maybe some come liked and we can unlike them? hook those up together?
+                    onToggleFavorite() // do we need both a button and in the data? maybe some come liked and we can unlike them? hook those up together?
+                    // TODO: will this actually update music statE (if i unlike and play again is state preserved?) - i think so
                 }
             }) {
                 Image(systemName: isLiked ? "heart.fill" : "heart")
@@ -60,8 +65,4 @@ struct PlaybackControlsView: View {
         }
 //        .frame(minWidth: 350)
     }
-}
-
-#Preview {
-    PlaybackControlsView(scale: 1.0)
 }

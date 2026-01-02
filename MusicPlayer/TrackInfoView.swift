@@ -30,7 +30,3 @@ struct TrackInfoView: View {
 //        .frame(maxWidth: .infinity, alignment: .leading)
     }
 }
-
-#Preview {
-    TrackInfoView(track: MockData.track1, scale: 1.0) // TODO: don't hardcode, or have a few you can click between?
-}

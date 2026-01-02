@@ -7,26 +7,6 @@
 
 import SwiftUI
 
-struct Track: Identifiable {
-    let id: UUID
-    let title: String
-    let artist: String
-    let albumArt: String
-    let audioURL: URL
-    var isLiked: Bool
-}
-
-struct MockData {
-    static let track1 = Track(id: UUID(),
-                       title: "Black Friday (pretty like the sun)",
-                       artist: "Lost Frequencies, Tom Odell, Poppy Baskcomb",
-                       albumArt: "turtlerock",
-                       audioURL: URL(string: "todo")!,
-                       isLiked: false)
-    
-    static let tracks = [track1, /* TODO: add 2-3 more */]
-}
-
 extension Color {
     // Taken from https://medium.com/nerd-for-tech/from-hex-to-color-and-back-in-swiftui-b2398da68a29
     init?(hex: String) {
@@ -77,4 +57,17 @@ extension Color {
     static var barColor2: Color? {
         return Color(hex: "585b66")
     }
+}
+
+// Taken from https://stackoverflow.com/a/40868784. https://developer.apple.com/documentation/swift/range/clamped(to:) exists but seems inaccessible for some reason.
+extension Comparable {
+    func clamped(to limits: ClosedRange<Self>) -> Self {
+        return min(max(self, limits.lowerBound), limits.upperBound)
+    }
+}
+
+func timeString(from seconds: Double) -> String {
+    let mins = Int(seconds) / 60
+    let secs = Int(seconds) % 60
+    return String(format: "%d:%02d", mins, secs)
 }
