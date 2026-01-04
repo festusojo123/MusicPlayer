@@ -46,6 +46,8 @@ struct PlaybackControlsView: View {
                     .frame(width: 72 * 0.8 * scale, height: 72 * 0.8 * scale)
                     .background(Color.selectedColor)
                     .clipShape(Circle())
+                    .contentTransition(.symbolEffect(.replace))
+                    .animation(.spring(response: 0.25, dampingFraction: 0.25), value: isPlaying)
             }.hoverEffect(.lift)
 
             Button(action: onNext) {

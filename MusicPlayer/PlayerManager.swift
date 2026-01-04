@@ -5,10 +5,11 @@
 //  Created by Festus Ojo on 1/1/26.
 //
 
+import AVFoundation
 import SwiftUI
 import Combine
 
-class PlayerManager: ObservableObject {
+class PlayerManager: NSObject, ObservableObject, AVAudioPlayerDelegate {
     @Published var isPlaying: Bool = false
     @Published var currentTime: Double = 0
     @Published var bufferedTime: Double = 0
@@ -16,6 +17,7 @@ class PlayerManager: ObservableObject {
     @Published var tracks: [Track] = MockData.tracks
 
     var timer: Timer?
+    var audioPlayer: AVAudioPlayer?
 
     var currentTrack: Track {
         get { tracks[currentTrackIndex] }
@@ -23,15 +25,28 @@ class PlayerManager: ObservableObject {
     }
 
     var duration: Double {
-        currentTrack.durationInSeconds
+        audioPlayer?.duration ?? currentTrack.durationInSeconds
+    }
+
+    override init() {
+        super.init()
+        do {
+            try AVAudioSession.sharedInstance().setCategory(.playback, mode: .default)
+            try AVAudioSession.sharedInstance().setActive(true)
+        } catch {
+            NSLog("\(#function): Failed with \(error)")
+        }
+        loadTrack(at: 0)
     }
 
     func play() {
+        audioPlayer?.play()
         isPlaying = true
         startTimer()
     }
 
     func pause() {
+        audioPlayer?.pause()
         isPlaying = false
         stopTimer()
     }
@@ -41,16 +56,33 @@ class PlayerManager: ObservableObject {
     }
 
     func seek(to time: Double) {
-        currentTime = time.clamped(to: 0...duration)
-        bufferedTime = (currentTime + 30).clamped(to: 0...duration)
+        let clampedTime = time.clamped(to: 0...duration)
+        audioPlayer?.currentTime = clampedTime
+        currentTime = clampedTime
     }
 
     func loadTrack(at index: Int) {
         stopTimer()
         currentTrackIndex = index
-        currentTime = 0
-        bufferedTime = 0
-        if isPlaying { startTimer() }
+
+        guard let url = Bundle.main.url(forResource: currentTrack.audioPath, withExtension: "mp3") else {
+            NSLog("\(#function): Could not find audio for \(currentTrack.title)")
+            return
+        }
+
+        do {
+            audioPlayer = try AVAudioPlayer(contentsOf: url)
+            audioPlayer?.delegate = self
+            audioPlayer?.prepareToPlay()
+            currentTime = 0
+        }
+        catch {
+            NSLog("\(#function): Playing audio for \(currentTrack.title) failed with \(error)")
+        }
+
+        if isPlaying {
+            play()
+        }
     }
 
     func next() {
@@ -74,9 +106,11 @@ class PlayerManager: ObservableObject {
 
     func startTimer() {
         timer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { _ in
-            self.currentTime += 0.1
-            // "Buffering" ahead by 30s
-            self.bufferedTime = min(self.currentTime + 30, self.duration)
+            if let player = self.audioPlayer {
+                self.currentTime = player.currentTime
+                // "Buffering" ahead by 30s
+                self.bufferedTime = min(self.currentTime + 30, self.duration)
+            }
 
             if self.currentTime >= self.duration {
                 self.next()

@@ -12,6 +12,7 @@ struct Track: Identifiable {
     let title: String
     let artist: String
     let albumArt: String
+    let audioPath: String
     let durationInSeconds: TimeInterval
     var isLiked: Bool
 }
@@ -21,6 +22,7 @@ struct MockData {
                               title: "Black Friday (pretty like the sun)",
                               artist: "Lost Frequencies, Tom Odell, Poppy Baskcomb",
                               albumArt: "PurpleNoon",
+                              audioPath: "BlackFridayPrettyLikeTheSun",
                               durationInSeconds: 311,
                               isLiked: false)
 
@@ -28,7 +30,8 @@ struct MockData {
                               title: "Get Lucky",
                               artist: "Daft Punk, Pharrell Williams, Nile Rodgers",
                               albumArt: "RandomAccessMemories",
-                              durationInSeconds: 369,
+                              audioPath: "GetLucky",
+                              durationInSeconds: 247,
                               isLiked: false)
 
     static let track3 = Track(id: UUID(),
@@ -36,13 +39,15 @@ struct MockData {
                               artist: "Stevie Wonder",
                               // I'm not adding the art for this song to the Xcode project to test the missing art fallback
                               albumArt: "TheWomanInRed",
-                              durationInSeconds: 262,
+                              audioPath: "IJustCalledToSayILoveYou",
+                              durationInSeconds: 261,
                               isLiked: true)
 
     static let track4 = Track(id: UUID(),
                               title: "Just the Way You Are",
                               artist: "Bruno Mars",
                               albumArt: "DooWops",
+                              audioPath: "JustTheWayYouAre",
                               durationInSeconds: 220,
                               isLiked: false)
 
@@ -50,6 +55,7 @@ struct MockData {
                               title: "Hey Ya!",
                               artist: "Outkast",
                               albumArt: "HeyYa",
+                              audioPath: "HeyYa",
                               durationInSeconds: 235,
                               isLiked: false)
     

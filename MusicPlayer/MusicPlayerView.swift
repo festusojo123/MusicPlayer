@@ -46,6 +46,7 @@ struct MusicPlayerView: View {
                     currentTime: $player.currentTime,
                     duration: player.duration,
                     bufferedTime: player.bufferedTime,
+                    scale: scale,
                     onSeek: { time in player.seek(to: time) }
                 )
                     .frame(width: 312 * 1.2 * scale)

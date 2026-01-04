@@ -21,6 +21,7 @@ struct TrackInfoView: View {
                         startDelay: 3)
                 .foregroundColor(.white)
                 .frame(maxWidth: 312 * scale, maxHeight: 24 * scale, alignment: .leading)
+                .hoverEffect(.lift)
 
             ReversedMarqueeText(text: track.artist,
                                 font: UIFont.artistText(scale: scale),
@@ -29,6 +30,7 @@ struct TrackInfoView: View {
                                 startDelay: 3)
                 .foregroundColor(.white.opacity(0.5))
                 .frame(maxWidth: 312 * scale, maxHeight: 16 * scale, alignment: .leading)
+                .hoverEffect(.lift)
         }
     }
 }

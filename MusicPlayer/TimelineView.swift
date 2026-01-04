@@ -11,6 +11,7 @@ struct TimelineView: View {
     @Binding var currentTime: Double
     let duration: Double
     let bufferedTime: Double
+    let scale: CGFloat
     let onSeek: (Double) -> Void
 
     @State var isDragging = false
@@ -48,15 +49,15 @@ struct TimelineView: View {
             // Time details
             HStack {
                 Text(timeString(from: displayTime))
-                    .font(.custom("GoogleSans-SemiBold", size: 15))
-                    .foregroundColor(.white.opacity(0.45))
+                    .font(.custom("GoogleSans-SemiBold", size: 15 * 0.8 * scale))
+                    .foregroundColor(.white.opacity(0.675))
                     .monospacedDigit()
                 
                 Spacer()
                 
                 Text(timeString(from: duration))
-                    .font(.custom("GoogleSans-SemiBold", size: 15))
-                    .foregroundColor(.white.opacity(0.45))
+                    .font(.custom("GoogleSans-SemiBold", size: 15 * 0.8 * scale))
+                    .foregroundColor(.white.opacity(0.675))
                     .monospacedDigit()
             }
         }
