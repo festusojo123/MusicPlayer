@@ -34,15 +34,10 @@ struct MusicPlayerView: View {
                 HStack(alignment: .center, spacing: 32 * 0.5 * scale) {
                     AlbumArtworkView(artworkName: player.currentTrack.albumArt)
                         .frame(width: 88 * scale, height: 88 * scale)
-//                        .resizable()
-//                        .aspectRatio(contentMode: .fill)
-//                        .frame(width: 130, height: 130)
                         .cornerRadius(8)
                     TrackInfoView(track: player.currentTrack, scale: scale)
                 }
                 .padding(.horizontal, 32 * scale)
-//                .padding(.top, 1 * scale)
-//                .frame(height: 120 * scale)
                 
                 Spacer()
                     .frame(height: 32 * 0.85 * scale)
@@ -57,15 +52,15 @@ struct MusicPlayerView: View {
                     .padding(.bottom, 6 * scale)
 
                 PlaybackControlsView(scale: scale,
+                                     trackID: player.currentTrack.id,
                                      isLiked: player.currentTrack.isLiked,
                                      isPlaying: player.isPlaying,
                                      onPlayPause: player.togglePlayPause,
                                      onNext: player.next,
                                      onPrevious: player.previous,
-                                     onToggleFavorite: player.toggleFavorite)
+                                     onToggleLike: player.toggleLike)
                     .frame(width: 312 * 1.2 * scale)
                     .padding(.horizontal, 32 * scale)
-                    // .padding(.bottom, 10 * scale)
             }
             .frame(width: widgetWidth, height: widgetHeight)
             .background(Color.backgroundColor)

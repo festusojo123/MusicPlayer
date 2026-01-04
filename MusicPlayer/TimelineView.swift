@@ -34,9 +34,9 @@ struct TimelineView: View {
             GeometryReader { geometry in
                 ZStack(alignment: .leading) {
                     // Total duration
-                    trackSlider(color: Color.barColor2?.opacity(0.5) ?? .blue, width: geometry.size.width)
+                    trackSlider(color: Color.barColor2.opacity(0.5), width: geometry.size.width)
                     // Progress
-                    trackSlider(color: Color.barColor ?? .blue, width: geometry.size.width * bufferedProgress)
+                    trackSlider(color: Color.barColor, width: geometry.size.width * bufferedProgress)
                     trackSlider(color: .white, width: geometry.size.width * progress)
                     // Thumb
                     thumbSlider(offset: geometry.size.width * progress)
@@ -48,7 +48,7 @@ struct TimelineView: View {
             // Time details
             HStack {
                 Text(timeString(from: displayTime))
-                    .font(.custom("GoogleSans-SemiBold", size: 15)) // TODO: tell them, i just couldnt get the font - tried many of the GoogleSans
+                    .font(.custom("GoogleSans-SemiBold", size: 15))
                     .foregroundColor(.white.opacity(0.45))
                     .monospacedDigit()
                 

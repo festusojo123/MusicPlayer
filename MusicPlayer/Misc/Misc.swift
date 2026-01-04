@@ -42,28 +42,44 @@ extension Color {
         self.init(red: r, green: g, blue: b, opacity: a)
     }
 
-    static var backgroundColor: Color? {
-        return Color(hex: "2e3240")
+    static var backgroundColor: Color {
+        return Color(hex: "2e3240") ?? Color.blue
     }
 
-    static var selectedColor: Color? {
-        return Color(hex: "004a77")
+    static var selectedColor: Color {
+        return Color(hex: "004a77") ?? Color.blue
     }
 
-    static var barColor: Color? {
-        return Color(hex: "96989f")
+    static var barColor: Color {
+        return Color(hex: "96989f") ?? Color.blue
     }
 
-    static var barColor2: Color? {
-        return Color(hex: "585b66")
+    static var barColor2: Color {
+        return Color(hex: "585b66") ?? Color.blue
     }
 }
 
-// Taken from https://stackoverflow.com/a/40868784. https://developer.apple.com/documentation/swift/range/clamped(to:) exists but seems inaccessible for some reason.
+// Taken from https://stackoverflow.com/a/40868784.
+// https://developer.apple.com/documentation/swift/range/clamped(to:) exists but seems inaccessible for some reason.
 extension Comparable {
     func clamped(to limits: ClosedRange<Self>) -> Self {
         return min(max(self, limits.lowerBound), limits.upperBound)
     }
+}
+
+extension UIFont {
+    static func artistText(scale: CGFloat) -> UIFont {
+        return UIFont(name: "GoogleSansFlex24pt-Medium", size: 16 * 0.925 * scale) ?? UIFont.systemFont(ofSize: 16 * 0.925 * scale)
+    }
+
+    static func titleText(scale: CGFloat) -> UIFont {
+        return UIFont(name: "GoogleSans-Medium", size: 24 * 0.85 * scale) ?? UIFont.systemFont(ofSize: 24 * 0.85 * scale)
+    }
+}
+
+func needsMarquee(_ text: String, font: UIFont, targetWidth: CGFloat) -> Bool {
+    let textWidth = text.size(withAttributes: [.font: font]).width
+    return textWidth > targetWidth
 }
 
 func timeString(from seconds: Double) -> String {

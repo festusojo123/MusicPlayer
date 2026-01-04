@@ -5,8 +5,8 @@
 //  Created by Festus Ojo on 1/1/26.
 //
 
-import Combine
 import SwiftUI
+import Combine
 
 class PlayerManager: ObservableObject {
     @Published var isPlaying: Bool = false
@@ -59,11 +59,16 @@ class PlayerManager: ObservableObject {
     }
 
     func previous() {
-        let prevIndex = (currentTrackIndex - 1 + tracks.count) % tracks.count
-        loadTrack(at: prevIndex)
+        if currentTime < 5.0 {
+            let prevIndex = (currentTrackIndex - 1 + tracks.count) % tracks.count
+            loadTrack(at: prevIndex)
+        }
+        else {
+            seek(to: 0)
+        }
     }
 
-    func toggleFavorite() {
+    func toggleLike() {
         currentTrack.isLiked.toggle()
     }
 

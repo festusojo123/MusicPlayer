@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import MarqueeText
 
 struct TrackInfoView: View {
     let track: Track
@@ -13,20 +14,21 @@ struct TrackInfoView: View {
     
     var body: some View {
         VStack(alignment: .leading, spacing: 12 * scale) {
-            Text(track.title)
+            MarqueeText(text: track.title,
+                        font: UIFont.titleText(scale: scale),
+                        leftFade: 16,
+                        rightFade: 16,
+                        startDelay: 3)
                 .foregroundColor(.white)
-                .font(.custom("GoogleSans-Medium", size: 24 * 0.85 * scale)) // TODO: noted i used font (24px per spec) and pixel size as 1:1 -> Designers typically work in @1x (base resolution), so their pixel measurements map directly to SwiftUI points. The system handles the actual pixel density automatically.
-                .lineLimit(1)
-                .truncationMode(.tail)
-                .frame(maxWidth: 312 * scale, alignment: .leading) // TODO: call out this discrpenacny - not using H from spec... for both tbh
+                .frame(maxWidth: 312 * scale, maxHeight: 24 * scale, alignment: .leading)
 
-            Text(track.artist)
+            ReversedMarqueeText(text: track.artist,
+                                font: UIFont.artistText(scale: scale),
+                                leftFade: 16,
+                                rightFade: 16,
+                                startDelay: 3)
                 .foregroundColor(.white.opacity(0.5))
-                .font(.custom("GoogleSansFlex_24pt-Medium", size: 16 * 0.925 * scale)) // TODO: Call out debate about Google Sans Text v Flex - https://en.wikipedia.org/wiki/Product_Sans
-                .lineLimit(1)
-                .truncationMode(.tail)
-                .frame(maxWidth: 312 * scale, alignment: .leading)
+                .frame(maxWidth: 312 * scale, maxHeight: 16 * scale, alignment: .leading)
         }
-//        .frame(maxWidth: .infinity, alignment: .leading)
     }
 }

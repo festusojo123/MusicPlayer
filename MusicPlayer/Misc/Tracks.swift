@@ -29,12 +29,13 @@ struct MockData {
                               artist: "Daft Punk, Pharrell Williams, Nile Rodgers",
                               albumArt: "RandomAccessMemories",
                               durationInSeconds: 369,
-                              isLiked: true)
+                              isLiked: false)
 
     static let track3 = Track(id: UUID(),
                               title: "I Just Called to Say I Love You",
                               artist: "Stevie Wonder",
-                              albumArt: "TheWomanInRed", // I'm not adding the art for this song to the Xcode project to test the missing art fallback
+                              // I'm not adding the art for this song to the Xcode project to test the missing art fallback
+                              albumArt: "TheWomanInRed",
                               durationInSeconds: 262,
                               isLiked: true)
 
@@ -50,7 +51,7 @@ struct MockData {
                               artist: "Outkast",
                               albumArt: "HeyYa",
                               durationInSeconds: 235,
-                              isLiked: true)
+                              isLiked: false)
     
     static let tracks = [track1, track2, track3, track4, track5]
 }
