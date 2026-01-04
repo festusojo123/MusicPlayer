@@ -17,38 +17,39 @@ struct PlaybackControlsView: View {
     let onToggleFavorite: () -> Void
     
     var body: some View {
-        HStack(spacing: 20 * scale) {
+        HStack(spacing: 24 * scale) {
 
             Button(action: {}) {
-                Image(systemName: "repeat") // TODO: call out diff
-                    .font(.system(size: 17 * scale))
+                Image("figmaRepeat")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
                     .foregroundColor(.white) // TODO: change color on click?
-                    .frame(width: 32 * scale, height: 32 * scale)
+                    .frame(width: 36 * 0.5 * scale, height: 36 * 0.5 * scale)
             }
             
             Button(action: onPrevious) {
-                Image(systemName: "backward.frame.fill")  // TODO: call out diff
-                    .font(.system(size: 17 * scale))
-                    .fontWeight(.ultraLight)
+                Image("figmaSkipPrevious")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
                     .foregroundColor(.white)
-                    .frame(width: 32 * scale, height: 32 * scale)
+                    .frame(width: 36 * 0.95 * scale, height: 36 * 0.95 * scale)
             }
 
             Button(action: onPlayPause) {
                 Image(systemName: isPlaying ? "pause.fill" : "play.fill")
                     .font(.system(size: 28 * scale))
                     .foregroundColor(.white)
-                    .frame(width: 64 * scale, height: 64 * scale)
+                    .frame(width: 72 * 0.8 * scale, height: 72 * 0.8 * scale)
                     .background(Color.selectedColor ?? Color.blue) // TODO: is the ?? not needed? what about other similar callsites?
                     .clipShape(Circle())
             }
             
             Button(action: onNext) {
-                Image(systemName: "forward.frame.fill")
-                    .font(.system(size: 17 * scale))
-                    .fontWeight(.ultraLight)
+                Image("figmaSkipNext")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
                     .foregroundColor(.white)
-                    .frame(width: 32 * scale, height: 32 * scale)
+                    .frame(width: 36 * 0.95 * scale, height: 36 * 0.95 * scale)
             }
 
             Button(action: {

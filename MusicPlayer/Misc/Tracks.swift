@@ -53,6 +53,4 @@ struct MockData {
                               isLiked: true)
     
     static let tracks = [track1, track2, track3, track4, track5]
-    
-    // TODO: don't hardcode, or have a few you can click between?
 }

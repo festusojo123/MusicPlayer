@@ -31,17 +31,21 @@ struct MusicPlayerView: View {
             let widgetHeight = baseHeight * 0.95 * scale
             
             VStack(spacing: 0) {
-                HStack(alignment: .center, spacing: 32 * scale) {
+                HStack(alignment: .center, spacing: 32 * 0.5 * scale) {
                     AlbumArtworkView(artworkName: player.currentTrack.albumArt)
                         .frame(width: 88 * scale, height: 88 * scale)
+//                        .resizable()
+//                        .aspectRatio(contentMode: .fill)
+//                        .frame(width: 130, height: 130)
+                        .cornerRadius(8)
                     TrackInfoView(track: player.currentTrack, scale: scale)
                 }
                 .padding(.horizontal, 32 * scale)
-                .padding(.top, 32 * 1.4 * scale)
+//                .padding(.top, 1 * scale)
 //                .frame(height: 120 * scale)
                 
                 Spacer()
-                    .frame(height: 32 * scale)
+                    .frame(height: 32 * 0.85 * scale)
                 
                 TimelineView(
                     currentTime: $player.currentTime,
@@ -50,7 +54,7 @@ struct MusicPlayerView: View {
                     onSeek: { time in player.seek(to: time) }
                 )
                     .frame(width: 312 * 1.2 * scale)
-                    .padding(.bottom, 16 * scale)
+                    .padding(.bottom, 6 * scale)
 
                 PlaybackControlsView(scale: scale,
                                      isLiked: player.currentTrack.isLiked,
@@ -61,7 +65,7 @@ struct MusicPlayerView: View {
                                      onToggleFavorite: player.toggleFavorite)
                     .frame(width: 312 * 1.2 * scale)
                     .padding(.horizontal, 32 * scale)
-                    .padding(.bottom, 32 * scale)
+                    // .padding(.bottom, 10 * scale)
             }
             .frame(width: widgetWidth, height: widgetHeight)
             .background(Color.backgroundColor)

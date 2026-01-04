@@ -34,7 +34,7 @@ struct TimelineView: View {
             GeometryReader { geometry in
                 ZStack(alignment: .leading) {
                     // Total duration
-                    trackSlider(color: Color.barColor2 ?? .blue, width: geometry.size.width)
+                    trackSlider(color: Color.barColor2?.opacity(0.5) ?? .blue, width: geometry.size.width)
                     // Progress
                     trackSlider(color: Color.barColor ?? .blue, width: geometry.size.width * bufferedProgress)
                     trackSlider(color: .white, width: geometry.size.width * progress)
@@ -48,15 +48,15 @@ struct TimelineView: View {
             // Time details
             HStack {
                 Text(timeString(from: displayTime))
-                    .font(.custom("GoogleSans-Medium", size: 17))
-                    .foregroundColor(.white.opacity(0.85))
+                    .font(.custom("GoogleSans-SemiBold", size: 15)) // TODO: tell them, i just couldnt get the font - tried many of the GoogleSans
+                    .foregroundColor(.white.opacity(0.45))
                     .monospacedDigit()
                 
                 Spacer()
                 
                 Text(timeString(from: duration))
-                    .font(.custom("GoogleSans-Medium", size: 17))
-                    .foregroundColor(.white.opacity(0.85))
+                    .font(.custom("GoogleSans-SemiBold", size: 15))
+                    .foregroundColor(.white.opacity(0.45))
                     .monospacedDigit()
             }
         }
@@ -65,15 +65,15 @@ struct TimelineView: View {
     // MARK: - Custom Slider Helpers
 
     func trackSlider(color: Color, width: CGFloat) -> some View {
-        RoundedRectangle(cornerRadius: 2)
+        Rectangle()
             .fill(color)
-            .frame(width: width, height: 4)
+            .frame(width: width, height: 3.75)
     }
 
     func thumbSlider(offset: CGFloat) -> some View {
         Circle()
             .fill(.white)
-            .frame(width: 12, height: 12)
+            .frame(width: 15, height: 15)
             .offset(x: offset)
     }
 
