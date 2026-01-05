@@ -5,8 +5,8 @@
 //  Modified by Festus Ojo on 1/4/26.
 //  Originally by Joe Kennedy on 10/12/20.
 
-//  (NOTE: Copied over from SwiftUI/MarqueeText's Sources/MarqueeText/MarqueeText.swift file: https://github.com/joekndy/MarqueeText/blob/master/Sources/MarqueeText/MarqueeText.swift.
-//  The only modification is to the makeMarqueeTexts method, flipping the directions of the offset to now go from right to left.
+//  NOTE: Copied over from SwiftUI/MarqueeText's Sources/MarqueeText/MarqueeText.swift file: https://github.com/joekndy/MarqueeText/blob/master/Sources/MarqueeText/MarqueeText.swift.
+//  The only modification is to the makeMarqueeTexts method, flipping the order of the offsets to make the text now go from left to right.
 //  I had to do this because Swift only allows for class inheritance, not structs, like MarqueeText is implemented as.
 
 import SwiftUI

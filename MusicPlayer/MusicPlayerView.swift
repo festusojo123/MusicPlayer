@@ -72,8 +72,6 @@ struct MusicPlayerView: View {
     }
 }
 
-#Preview(traits: .landscapeLeft) {
-    /*@START_MENU_TOKEN@*//*@PLACEHOLDER=Container@*/VStack/*@END_MENU_TOKEN@*/ {
-        MusicPlayerView()
-    }
+#Preview {
+    MusicPlayerView()
 }

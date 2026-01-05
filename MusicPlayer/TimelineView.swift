@@ -18,7 +18,12 @@ struct TimelineView: View {
     @State var dragValue: Double = 0
 
     var displayTime: Double {
-        isDragging ? dragValue : currentTime
+        if isDragging {
+            return dragValue
+        }
+        else {
+            return currentTime
+        }
     }
 
     var progress: Double {

@@ -27,7 +27,6 @@ struct PlaybackControlsView: View {
                 Image("figmaRepeat")
                     .resizable()
                     .aspectRatio(contentMode: .fit)
-                    .foregroundColor(.white) // TODO: change color on click?
                     .frame(width: 36 * 0.5 * scale, height: 36 * 0.5 * scale)
             }.hoverEffect(.lift)
 

@@ -77,11 +77,6 @@ extension UIFont {
     }
 }
 
-func needsMarquee(_ text: String, font: UIFont, targetWidth: CGFloat) -> Bool {
-    let textWidth = text.size(withAttributes: [.font: font]).width
-    return textWidth > targetWidth
-}
-
 func timeString(from seconds: Double) -> String {
     let mins = Int(seconds) / 60
     let secs = Int(seconds) % 60
