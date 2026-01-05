@@ -30,12 +30,8 @@ class PlayerManager: NSObject, ObservableObject, AVAudioPlayerDelegate {
 
     override init() {
         super.init()
-        do {
-            try AVAudioSession.sharedInstance().setCategory(.playback, mode: .default)
-            try AVAudioSession.sharedInstance().setActive(true)
-        } catch {
-            NSLog("\(#function): Failed with \(error)")
-        }
+        try? AVAudioSession.sharedInstance().setCategory(.playback, mode: .default)
+        try? AVAudioSession.sharedInstance().setActive(true)
         loadTrack(at: 0)
     }
 
@@ -52,7 +48,12 @@ class PlayerManager: NSObject, ObservableObject, AVAudioPlayerDelegate {
     }
 
     func togglePlayPause() {
-        isPlaying ? pause() : play()
+        if isPlaying {
+            pause()
+        }
+        else {
+            play()
+        }
     }
 
     func seek(to time: Double) {
@@ -70,15 +71,10 @@ class PlayerManager: NSObject, ObservableObject, AVAudioPlayerDelegate {
             return
         }
 
-        do {
-            audioPlayer = try AVAudioPlayer(contentsOf: url)
-            audioPlayer?.delegate = self
-            audioPlayer?.prepareToPlay()
-            currentTime = 0
-        }
-        catch {
-            NSLog("\(#function): Playing audio for \(currentTrack.title) failed with \(error)")
-        }
+        audioPlayer = try? AVAudioPlayer(contentsOf: url)
+        audioPlayer?.delegate = self
+        audioPlayer?.prepareToPlay()
+        currentTime = 0
 
         if isPlaying {
             play()
